@@ -33,7 +33,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = 'False'
 
 ALLOWED_HOSTS = [
-    'gomoto2-dev.us-west-2.elasticbeanstalk.com',
     'localhost',
     '127.0.0.1',
     'gomoto.io',
