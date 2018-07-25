@@ -39,6 +39,9 @@ def event_registration(request):
     #
     # return HttpResponseRedirect(reverse('lobosevents:event_registration'))
 
+# create an email function - This function will be used across the site, maybe a mass email function as well
+def single_email():
+    pass
 
 # @check_recaptcha
 def register(request):
@@ -56,7 +59,7 @@ def register(request):
         login(request, user)
         send_mail(
             'Test user registration Subject',
-            'Welcome to gomoto ' + user.username.title() + '. \nHere is the test user registration message.\nYour username is '+ user.username + '\nYour password is ' + password +'\nYou can view your race history in your profile',
+            'Welcome to gomoto ' + user.username.title() + '. \nHere is the test user registration message.\nYour username is '+ user.username + '\nYour password is ' + password +'\nYou can view your race history in your profile https://www.gomoto.io/profile'+'\nYou can register for our events at https://www.gomoto.io/event_registration',
             'unitedideas@gmail.com',
             [user.email],
             fail_silently=False,
