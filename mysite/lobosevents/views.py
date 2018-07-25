@@ -40,30 +40,37 @@ def event_registration(request):
     # return HttpResponseRedirect(reverse('lobosevents:event_registration'))
 
 
-@check_recaptcha
+# @check_recaptcha
 def register(request):
-    if not request.recaptcha_is_valid:
-        return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
-    username = request.POST['username']
-    email = request.POST['email']
-    password = request.POST['password']
-    user = User.objects.create_user(username, email, password)
-    login(request, user)
-    send_mail(
-        'Subject here',
-        'Here is the message.',
-        'from@example.com',
-        ['to@example.com'],
-        fail_silently=False,
-    )
+    # if not request.recaptcha_is_valid:
+    #     return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
+    try:
+        username = request.POST['username'].lower()
+        for letter in username:
+            if not letter.isdigit() and not letter.isalpha():
+                return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=bad_username')
 
-    return HttpResponseRedirect(reverse('lobosevents:index'))
+        email = request.POST['email']
+        password = request.POST['password']
+        user = User.objects.create_user(username, email, password)
+        login(request, user)
+        send_mail(
+            'Test user registration Subject',
+            'Welcome to gomoto ' + user.username.title() + '. \nHere is the test user registration message.\nYour username is '+ user.username + '\nYour password is ' + password +'\nYou can view your race history in your profile',
+            'unitedideas@gmail.com',
+            [user.email],
+            fail_silently=False,
+        )
 
+        return HttpResponseRedirect(reverse('lobosevents:profile'))
+    except:
 
-@check_recaptcha
+        return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=duplicate_username')
+
+# @check_recaptcha
 def mylogin(request):
-    if not request.recaptcha_is_valid:
-        return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
+    # if not request.recaptcha_is_valid:
+    #     return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
@@ -73,7 +80,7 @@ def mylogin(request):
         login(request, user)
         if 'next' in request.POST and request.POST['next'] != '':
             return HttpResponseRedirect(request.POST['next'])
-        return HttpResponseRedirect(reverse('lobosevents:index'))
+        return HttpResponseRedirect(reverse('lobosevents:profile'))
     return HttpResponseRedirect(reverse('lobosevents:login_register'))
 
 

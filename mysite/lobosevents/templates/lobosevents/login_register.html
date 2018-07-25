@@ -21,6 +21,12 @@
         {% if message == 'bad_recaptcha' %}
         <h3 style="color:red">Please select the Recaptcha</h3>
         {% endif %}
+        {% if message == 'duplicate_username' %}
+        <h3 style="color:red">This username is not available</h3>
+        {% endif %}
+        {% if message == 'bad_username' %}
+        <h3 style="color:red">The username can only contain letters and numbers</h3>
+        {% endif %}
         <form action="{% url 'lobosevents:register' %}" method="post">
             {% csrf_token %}
             <input type="hidden" name="next" value="{{next}}"/>
