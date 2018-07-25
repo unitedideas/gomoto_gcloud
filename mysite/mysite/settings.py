@@ -33,7 +33,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = 'False'
 
 ALLOWED_HOSTS = [
-    'gomoto2-dev.us-west-2.elasticbeanstalk.com',
     'localhost',
     '127.0.0.1',
     'gomoto.io',
@@ -48,7 +47,6 @@ EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 EMAIL_PORT = EMAIL_PORT
 EMAIL_USE_TLS = EMAIL_USE_TLS
 DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
-
 
 # Application definition
 
@@ -155,7 +153,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
-
 
 STATIC_URL = 'https://storage.googleapis.com/lobosevents-static/'
 

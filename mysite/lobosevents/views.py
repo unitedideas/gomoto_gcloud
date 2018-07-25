@@ -13,10 +13,6 @@ def index(request):
     return render(request, 'lobosevents/event_registration.html')
 
 
-def heroes(request):
-    return render(request, 'lobosevents/heroes_changelist.html')
-
-
 def cancelorder(request):
     return render(request, 'lobosevents/cancelorder.html')
 
@@ -27,7 +23,6 @@ def event_reg_confirmation(request):
 
 def profile(request):
     return render(request, 'lobosevents/profile.html')
-
 
 
 
