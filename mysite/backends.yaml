@@ -1,4 +1,0 @@
-backends:
-- name: foo
-  instances: 20
-  options: public, dynamic
