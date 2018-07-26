@@ -68,6 +68,7 @@ def register(request):
         )
         return HttpResponseRedirect(reverse('lobosevents:profile'))
     except:
+        print(username, password, email)
         return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=duplicate_username')
 
 # @check_recaptcha
