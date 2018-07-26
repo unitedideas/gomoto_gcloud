@@ -46,8 +46,8 @@ def single_email():
 
 # @check_recaptcha
 def register(request):
-    # if not request.recaptcha_is_valid:
-    #     return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
+    if not request.recaptcha_is_valid:
+        return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
     try:
         username = request.POST['username'].lower()
         for letter in username:
