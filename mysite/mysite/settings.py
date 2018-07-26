@@ -51,7 +51,6 @@ DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.sessions',
     'gomoto.apps.GomotoConfig',
     'lobosevents.apps.LoboseventsConfig',
     'django.contrib.admin',
@@ -66,6 +65,7 @@ INSTALLED_APPS = [
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 MIDDLEWARE = [
+    'gaesessions.DjangoSessionMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
