@@ -52,6 +52,7 @@ def register(request):
         username = request.POST['username'].lower()
         for letter in username:
             if not letter.isdigit() and not letter.isalpha():
+                print(request.session)
                 return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=bad_username')
 
         email = request.POST['email']
@@ -65,10 +66,8 @@ def register(request):
             [user.email],
             fail_silently=False,
         )
-
         return HttpResponseRedirect(reverse('lobosevents:profile'))
     except:
-
         return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=duplicate_username')
 
 # @check_recaptcha
