@@ -52,11 +52,11 @@ DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
 
 INSTALLED_APPS = [
     'gomoto.apps.GomotoConfig',
+    'django.contrib.sessions',
     'lobosevents.apps.LoboseventsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'import_export',
@@ -65,8 +65,8 @@ INSTALLED_APPS = [
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 MIDDLEWARE = [
+    "django.contrib.sessions.backends.signed_cookies"
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
