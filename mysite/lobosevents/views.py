@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate
 from tablib import Dataset
 from .resources import PersonResource
 from django.core.mail import send_mail
+from gaesessions import get_current_session
+
 
 
 def index(request):
@@ -64,8 +66,13 @@ def register(request):
             [user.email],
             fail_silently=False,
         )
+        session = get_current_session()
+        if session.is_active():
+            session.terminate()
+        session['email'] = user.email
 
         return HttpResponseRedirect(reverse('lobosevents:profile'))
+
     except:
 
         return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=duplicate_username')
