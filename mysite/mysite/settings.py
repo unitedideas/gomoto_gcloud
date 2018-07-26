@@ -51,6 +51,7 @@ DEFAULT_FROM_EMAIL = DEFAULT_FROM_EMAIL
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sessions',
     'gomoto.apps.GomotoConfig',
     'lobosevents.apps.LoboseventsConfig',
     'django.contrib.admin',
