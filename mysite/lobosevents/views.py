@@ -7,7 +7,13 @@ from django.contrib.auth import authenticate
 from tablib import Dataset
 from .resources import PersonResource
 from django.core.mail import send_mail
+import urllib
+import urllib2
+import json
 
+from django.shortcuts import render, redirect
+from django.conf import settings
+from django.contrib import messages
 
 
 def index(request):
@@ -26,7 +32,6 @@ def profile(request):
     return render(request, 'lobosevents/profile.html')
 
 
-
 # @login_required
 def event_registration(request):
     return render(request, 'lobosevents/event_registration.html')
@@ -40,15 +45,28 @@ def event_registration(request):
     #
     # return HttpResponseRedirect(reverse('lobosevents:event_registration'))
 
+
 # create an email function - This function will be used across the site, maybe a mass email function as well
 def single_email():
     pass
 
+
 # @check_recaptcha
 def register(request):
-    print(request)
-    if not request.recaptcha_is_valid:
-        return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
+    ''' Begin reCAPTCHA validation '''
+    recaptcha_response = request.POST.get('g-recaptcha-response')
+    url = 'https://www.google.com/recaptcha/api/siteverify'
+    values = {
+        'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+        'response': recaptcha_response
+    }
+    data = urllib.urlencode(values)
+    req = urllib2.Request(url, data)
+    response = urllib2.urlopen(req)
+    result = json.load(response)
+    ''' End reCAPTCHA validation '''
+    # if not request.recaptcha_is_valid:
+    #     return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
     try:
         username = request.POST['username'].lower()
         for letter in username:
@@ -61,7 +79,7 @@ def register(request):
         login(request, user)
         send_mail(
             'Test user registration Subject',
-            'Welcome to gomoto ' + user.username.title() + '. \nHere is the test user registration message.\nYour username is '+ user.username + '\nYour password is ' + password +'\nYou can view your race history in your profile https://www.gomoto.io/profile'+'\nYou can register for our events at https://www.gomoto.io/event_registration',
+            'Welcome to gomoto ' + user.username.title() + '. \nHere is the test user registration message.\nYour username is ' + user.username + '\nYour password is ' + password + '\nYou can view your race history in your profile https://www.gomoto.io/profile' + '\nYou can register for our events at https://www.gomoto.io/event_registration',
             'unitedideas@gmail.com',
             [user.email],
             fail_silently=False,
@@ -70,14 +88,14 @@ def register(request):
     except:
         return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=duplicate_username')
 
+
 # @check_recaptcha
 def mylogin(request):
     if not request.recaptcha_is_valid:
-        return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
+        return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=bad_recaptcha')
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
-
 
     if user is not None:
         login(request, user)
@@ -90,7 +108,6 @@ def mylogin(request):
 def mylogout(request):
     logout(request)
     return HttpResponseRedirect(reverse('lobosevents:login_register'))
-
 
 
 def login_register(request):
@@ -113,9 +130,6 @@ def simple_upload(request):
 
     return render(request, 'core/simple_upload.html')
 
-
-
-
 # send_mail(
 #     'Subject here',
 #     'Here is the message.',
@@ -123,23 +137,3 @@ def simple_upload(request):
 #     ['to@example.com'],
 #     fail_silently=False,
 # )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
