@@ -46,13 +46,13 @@ def single_email():
 
 # @check_recaptcha
 def register(request):
+    print(request)
     if not request.recaptcha_is_valid:
         return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
     try:
         username = request.POST['username'].lower()
         for letter in username:
             if not letter.isdigit() and not letter.isalpha():
-                print(request.session)
                 return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=bad_username')
 
         email = request.POST['email']
@@ -72,8 +72,8 @@ def register(request):
 
 # @check_recaptcha
 def mylogin(request):
-    # if not request.recaptcha_is_valid:
-    #     return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
+    if not request.recaptcha_is_valid:
+        return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
