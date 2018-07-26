@@ -10,7 +10,6 @@ from django.core.mail import send_mail
 
 
 
-
 def index(request):
     return render(request, 'lobosevents/event_registration.html')
 
