@@ -29,6 +29,7 @@ class Profile(models.Model):
     address = models.CharField(max_length=300, null=True, blank=True)
     address_line_two = models.CharField(max_length=300, null=True, blank=True)
     city = models.CharField(max_length=300, null=True, blank=True)
+    # make a dropdown
     state = models.CharField(max_length=300, null=True, blank=True)
     zip_code = models.CharField(max_length=300, null=True, blank=True)
 
@@ -69,22 +70,24 @@ class SpecialTest(models.Model):
     special_test_num = models.IntegerField(max_length=30, null=True, blank=True)
 
     def __str__(self):
-        return str(self.event)+ ' - ' + ' Special Test ' + str(self.special_test_num)
+        return str(self.event)+ ' - ' + ' Lap/Special Test ' + str(self.special_test_num)
 
 
 class UserEvent(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    bike_year = models.IntegerField(null=True, blank=True)
+    # bike_year = models.IntegerField(null=True, blank=True)
     bike_make = models.CharField(max_length=300, null=True, blank=True)
-    bike_model = models.CharField(max_length=300, null=True, blank=True)
+    # bike_model = models.CharField(max_length=300, null=True, blank=True)
     bike_displacement = models.IntegerField(null=True, blank=True)
-    placard = models.IntegerField(null=True, blank=True)
+    rider_number = models.IntegerField(null=True, blank=True)
     confirmation = models.CharField(max_length=300, null=True, blank=True)
+    start_time = models.TimeField(max_length=300, null=True, blank=True)
+    age_on_event_day = models.IntegerField(null=True, blank=True)
 
     # todo every event or put on the user profile?
-    omra_number = models.IntegerField()
-    ama_number = models.IntegerField()
+    omra_number = models.CharField(max_length=300, null=True, blank=True)
+    ama_number = models.models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.user) + ' - ' + str(self.event)+ ' - ' + str(self.placard)
@@ -95,6 +98,7 @@ class UserSpecialTest(models.Model):
     specialtest = models.ForeignKey(SpecialTest, on_delete=models.CASCADE)
     start_time = models.TimeField(max_length=300, null=True, blank=True)
     stop_time = models.TimeField(max_length=300, null=True, blank=True)
+    total_time = models.FloatField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.user) + ' ' + str(self.specialtest)
