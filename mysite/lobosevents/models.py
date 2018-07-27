@@ -102,6 +102,7 @@ class UserSpecialTest(models.Model):
     specialtest = models.ForeignKey(SpecialTest, on_delete=models.CASCADE)
     start_time = models.TimeField(max_length=300, null=True, blank=True)
     stop_time = models.TimeField(max_length=300, null=True, blank=True)
+    total_time = models.FloatField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.user) + ' ' + str(self.specialtest)
