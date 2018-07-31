@@ -1,18 +1,17 @@
+from .models import Profile, UserEvent
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login
 from .decorators import check_recaptcha
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect, render_to_response
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate
 from tablib import Dataset
 from .resources import PersonResource
 from django.core.mail import send_mail
 import urllib
 import json
-
-from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
+from .forms import UserProfileForm, UserEventForm
 
 
 def index(request):

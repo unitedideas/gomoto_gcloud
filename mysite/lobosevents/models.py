@@ -1,8 +1,19 @@
+import os
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
+from django.conf import settings
+from phonenumber_field.modelfields import PhoneNumberField
+from django.utils.text import slugify
+# from mysite.util import load_choices
+# from mysite.fields import (
+#     RangeIntegerField,
+#     PercentageField,
+# )
+
 
 
 #   V--->--hooks extends-->---V
@@ -18,9 +29,12 @@ class Profile(models.Model):
         (FEMALE, 'Female'),
         (MALE, 'Male'),
     )
-
+    # user name displayed at login
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
-    gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
+
+
+    gender = models.CharField(max_length=10, choices=GENDER)
+
     birth_date = models.DateField(null=True, blank=True)
 
     # django-phonenumber module from diaper bank app
@@ -57,7 +71,6 @@ class Profile(models.Model):
 class Event(models.Model):
     event_name = models.CharField(max_length=300, null=True, blank=True)
     event_date = models.DateField(max_length=300, null=True, blank=True)
-    # could be added
     pro_time_est = models.TimeField(max_length=300, null=True, blank=True)
     am_time_est = models.TimeField(max_length=300, null=True, blank=True)
 
@@ -75,20 +88,21 @@ class SpecialTest(models.Model):
 
 
 class UserEvent(models.Model):
+    # These will be needed in the form
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # bike_year = models.IntegerField(null=True, blank=True)
     bike_make = models.CharField(max_length=300, null=True, blank=True)
-    # bike_model = models.CharField(max_length=300, null=True, blank=True)
     bike_displacement = models.IntegerField(null=True, blank=True)
-    rider_number = models.IntegerField(null=True, blank=True)
-    confirmation = models.CharField(max_length=300, null=True, blank=True)
-    start_time = models.TimeField(max_length=300, null=True, blank=True)
-    age_on_event_day = models.IntegerField(null=True, blank=True)
-
-    # todo every event or put on the user profile?
     omra_number = models.CharField(max_length=300, null=True, blank=True)
-    ama_number = models.models.CharField(max_length=300, null=True, blank=True)
+    ama_number = models.CharField(max_length=300, null=True, blank=True)
+
+    # These items will not be in the form and must not be visible
+    # confirmation will be generated, age on event day will be calculated
+    # rider number and start time will be assigned
+    age_on_event_day = models.IntegerField(null=True, blank=True)
+    confirmation = models.CharField(max_length=300, null=True, blank=True)
+    rider_number = models.IntegerField(null=True, blank=True)
+    start_time = models.TimeField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.user) + ' - ' + str(self.event)+ ' - ' + str(self.placard)
