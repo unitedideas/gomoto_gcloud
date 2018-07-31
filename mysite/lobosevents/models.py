@@ -23,21 +23,22 @@ class Profile(models.Model):
     gender = forms.ChoiceField(choices=GENDER, widget=forms.RadioSelect())
     birth_date = models.DateField(null=True, blank=True)
 
-    # twilio 'Lookup' API
+    # django-phonenumber module from diaper bank app
+    # or use the django built-in phonenumber
     phone_number = models.CharField(max_length=300, null=True, blank=True)
     country = models.CharField(max_length=300, null=True, blank=True)
     address = models.CharField(max_length=300, null=True, blank=True)
     address_line_two = models.CharField(max_length=300, null=True, blank=True)
     city = models.CharField(max_length=300, null=True, blank=True)
-    # make a dropdown
+    # make a dropdown like from the diaper bank app
     state = models.CharField(max_length=300, null=True, blank=True)
     zip_code = models.CharField(max_length=300, null=True, blank=True)
 
     # todo every event or keep on the user profile?
-    # e_c = emergemcy contact
+    # e_c = emergency contact
     emergency_contact_name = models.CharField(max_length=300, null=True, blank=True)
 
-    # twilio 'Lookup' API
+    # using phone number type=phone
     emergency_contact_contact = models.CharField(max_length=300, null=True, blank=True)
 
     # @receiver(post_save, sender=User)
