@@ -67,7 +67,7 @@ class Event(models.Model):
 
 class SpecialTest(models.Model):
     event = models.ForeignKey(Event, null=True, blank=True, on_delete=models.CASCADE)
-    special_test_num = models.IntegerField(max_length=30, null=True, blank=True)
+    special_test_num = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return str(self.event)+ ' - ' + ' Lap/Special Test ' + str(self.special_test_num)
@@ -87,7 +87,7 @@ class UserEvent(models.Model):
 
     # todo every event or put on the user profile?
     omra_number = models.CharField(max_length=300, null=True, blank=True)
-    ama_number = models.models.CharField(max_length=300, null=True, blank=True)
+    ama_number = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return str(self.user) + ' - ' + str(self.event)+ ' - ' + str(self.placard)

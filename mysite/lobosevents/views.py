@@ -8,7 +8,6 @@ from tablib import Dataset
 from .resources import PersonResource
 from django.core.mail import send_mail
 import urllib
-import urllib2
 import json
 
 from django.shortcuts import render, redirect
@@ -53,17 +52,17 @@ def single_email():
 
 # @check_recaptcha
 def register(request):
+    print()
     ''' Begin reCAPTCHA validation '''
     recaptcha_response = request.POST.get('g-recaptcha-response')
-    url = 'https://www.google.com/recaptcha/api/siteverify'
     values = {
         'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
         'response': recaptcha_response
     }
-    data = urllib.urlencode(values)
-    req = urllib2.Request(url, data)
-    response = urllib2.urlopen(req)
-    result = json.load(response)
+    print('resp')
+    print(recaptcha_response)
+    print()
+
     ''' End reCAPTCHA validation '''
     # if not request.recaptcha_is_valid:
     #     return HttpResponseRedirect(reverse('lobosevents:login_register')+'?message=bad_recaptcha')
@@ -73,17 +72,19 @@ def register(request):
             if not letter.isdigit() and not letter.isalpha():
                 return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=bad_username')
 
-        email = request.POST['email']
-        password = request.POST['password']
-        user = User.objects.create_user(username, email, password)
-        login(request, user)
-        send_mail(
-            'Test user registration Subject',
-            'Welcome to gomoto ' + user.username.title() + '. \nHere is the test user registration message.\nYour username is ' + user.username + '\nYour password is ' + password + '\nYou can view your race history in your profile https://www.gomoto.io/profile' + '\nYou can register for our events at https://www.gomoto.io/event_registration',
-            'unitedideas@gmail.com',
-            [user.email],
-            fail_silently=False,
-        )
+
+        # turn this back on for email confirmation
+        # email = request.POST['email']
+        # password = request.POST['password']
+        # user = User.objects.create_user(username, email, password)
+        # login(request, user)
+        # send_mail(
+        #     'Test user registration Subject',
+        #     'Welcome to gomoto ' + user.username.title() + '. \nHere is the test user registration message.\nYour username is ' + user.username + '\nYour password is ' + password + '\nYou can view your race history in your profile https://www.gomoto.io/profile' + '\nYou can register for our events at https://www.gomoto.io/event_registration',
+        #     'unitedideas@gmail.com',
+        #     [user.email],
+        #     fail_silently=False,
+        # )
         return HttpResponseRedirect(reverse('lobosevents:profile'))
     except:
         return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=duplicate_username')
