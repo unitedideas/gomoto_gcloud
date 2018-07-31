@@ -4,6 +4,7 @@ from .models import Profile, UserEvent
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
+        exclude = [None]
 
 class UserEventForm(forms.ModelForm):
     class Meta:
