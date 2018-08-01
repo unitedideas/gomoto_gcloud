@@ -14,8 +14,8 @@ from django.contrib import messages
 from .forms import ProfileFormSet, UserEventFormSet
 
 
-def index(request):
-    return render(request, 'lobosevents/event_registration.html')
+def login(request):
+    return render(request, 'lobosevents/login.html')
 
 
 def cancelorder(request):
