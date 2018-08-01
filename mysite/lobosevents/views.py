@@ -11,7 +11,7 @@ import urllib
 import json
 from django.conf import settings
 from django.contrib import messages
-from .forms import UserProfileForm, UserEventForm
+from .forms import ProfileFormSet, UserEventFormSet
 
 
 def index(request):
@@ -32,7 +32,24 @@ def profile(request):
 
 # @login_required
 def event_registration(request):
-    return render(request, 'lobosevents/event_registration.html')
+    # user = request.user
+    # print(user)
+    # user = User.objects.filter(username=request.user)
+    # print(user)
+
+    profileformset = ProfileFormSet()
+    usereventformset = UserEventFormSet()
+
+    for form in profileformset:
+        # form.fields['user'].queryset = User.objects.filter(username=request.user)
+        print(form)
+        print()
+    for form in usereventformset:
+        print(form)
+        print()
+
+    return render(request, 'lobosevents/event_registration.html',
+                  {'profileformset': profileformset, 'usereventformset': usereventformset})
 
     # todo_text = request.POST['todo_item_id_key_in_template']
     # todo_item = TodoItem.objects.get(pk=todo_text)
@@ -70,7 +87,6 @@ def register(request):
         for letter in username:
             if not letter.isdigit() and not letter.isalpha():
                 return HttpResponseRedirect(reverse('lobosevents:login_register') + '?message=bad_username')
-
 
         # turn this back on for email confirmation
         # email = request.POST['email']

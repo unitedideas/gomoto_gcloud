@@ -8,12 +8,13 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils.text import slugify
+
+
 # from mysite.util import load_choices
 # from mysite.fields import (
 #     RangeIntegerField,
 #     PercentageField,
 # )
-
 
 
 #   V--->--hooks extends-->---V
@@ -32,8 +33,7 @@ class Profile(models.Model):
     # user name displayed at login
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
 
-
-    gender = models.CharField(max_length=10, choices=GENDER)
+    gender = models.CharField( null=True, blank=True, max_length=10, choices=GENDER)
 
     birth_date = models.DateField(null=True, blank=True)
 
@@ -75,7 +75,6 @@ class Event(models.Model):
     am_time_est = models.TimeField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-
         return str(self.event_name) + ' ' + str(self.event_date)[0:4]
 
 
@@ -84,7 +83,7 @@ class SpecialTest(models.Model):
     special_test_num = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return str(self.event)+ ' - ' + ' Lap/Special Test ' + str(self.special_test_num)
+        return str(self.event) + ' - ' + ' Lap/Special Test ' + str(self.special_test_num)
 
 
 class UserEvent(models.Model):
@@ -105,7 +104,7 @@ class UserEvent(models.Model):
     start_time = models.TimeField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return str(self.user) + ' - ' + str(self.event)+ ' - ' + str(self.placard)
+        return str(self.user) + ' - ' + str(self.event) + ' - ' + str(self.rider_number)
 
 
 class UserSpecialTest(models.Model):
@@ -119,15 +118,8 @@ class UserSpecialTest(models.Model):
         return str(self.user) + ' ' + str(self.specialtest)
 
 
-
 class Person(models.Model):
     name = models.CharField(max_length=30)
     email = models.EmailField(blank=True)
     birth_date = models.DateField()
     location = models.CharField(max_length=100, blank=True)
-
-
-
-
-
-
