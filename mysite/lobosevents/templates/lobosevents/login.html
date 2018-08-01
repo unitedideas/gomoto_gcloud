@@ -6,12 +6,17 @@
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!--custom CSS-->
     {% load static %}
-    <link rel="stylesheet" href="{% static 'mysite/lobosevents/static/lobosevents/style.css' %}" type="text">
+    <link rel="stylesheet" href="{% static 'lobosevents/style.css' %}" type="text/css">
 
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
+<br>---------------These are all your data options-------------------------------<br>
+{{name}}{{numbers}}
+<br>---------------These are all your data options--------------------------------<br>
+
+<h1>{{name}}</h1>
 Welcome! you can login here.
 </body>
 </html>

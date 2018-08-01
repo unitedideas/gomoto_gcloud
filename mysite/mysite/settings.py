@@ -153,8 +153,8 @@ STATIC_URL = '/static/'
 
 # if css is messed up turn these back on gomoto.io
 
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 #
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'lobosevents', 'gomoto', 'static')
-# ]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'lobosevents', 'gomoto', 'static')
+]

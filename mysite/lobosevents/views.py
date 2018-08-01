@@ -15,7 +15,41 @@ from .forms import ProfileFormSet, UserEventFormSet
 
 
 def login(request):
-    return render(request, 'lobosevents/login.html')
+    numbers = [1,2,3,4,5]
+    name = 'Shane Cheek'
+
+
+
+    args = {'name': name, 'numbers': numbers}
+
+    # the render method also takes an optional dictionary object that passes through to the view(template)
+    return render(request, 'lobosevents/login.html', args )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def cancelorder(request):
