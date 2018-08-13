@@ -1,11 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from statistics import *
-from datetime import time
-from cmath import sqrt
-from collections import OrderedDict
-import json, importlib, datetime, operator
-from django.db.models import Avg, Max, Min, Sum
+import json
+import operator
 from .models import Bike
 
 
@@ -25,10 +22,7 @@ def get_bikes(request):
 
     response_dictionary = {}
 
-
-
     bikes = Bike.objects.all()
-
 
     # This gives me all bikes
     print(filters_dict)
@@ -37,9 +31,8 @@ def get_bikes(request):
     print(len(bikes), end=' <--- filtered bike count \n')
     if len(bikes) < 3:
         # return JsonResponse({'bikes':[]}) #<--- Matthew
-        return JsonResponse({'message':'There are no motorcycle that meet these filters. GOMOTO some more!', 'bikes':[]})
-
-
+        return JsonResponse(
+            {'message': 'There are no motorcycle that meet these filters. GOMOTO some more!', 'bikes': []})
 
     bike_score_list = []
     print(bike_score_list)
@@ -76,13 +69,13 @@ def get_bikes(request):
         print(bike)
         values = []
         for field in keys:
-            values.append(getattr(bike,field))
+            values.append(getattr(bike, field))
         return_list.append(dict(zip(keys, values)))
         # print()
         # print(return_list)
         # print()
 
-    return_data = {'bikes':return_list}
+    return_data = {'bikes': return_list}
     # print(return_data)
 
     return JsonResponse(return_data)
@@ -110,12 +103,10 @@ def std_dev_calc(property_mean, standard_dev, bikes, priorities_list):
             bike_score += z_score
         all_bikes_scores[bike] = bike_score
 
-    all_bikes_scores = sorted(all_bikes_scores.items(), key=operator.itemgetter(1), reverse= True)
+    all_bikes_scores = sorted(all_bikes_scores.items(), key=operator.itemgetter(1), reverse=True)
     all_bikes_scores = dict(all_bikes_scores[:3])
     #
     # for bike in all_bikes_scores:
     #     top_3_bikes.append(bike[0])
 
-
     return all_bikes_scores
-
