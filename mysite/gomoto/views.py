@@ -15,10 +15,6 @@ def get_bikes(request):
     print(data_from_vue)
     priorities_list = data_from_vue["priorities_list"]
     filters_dict = data_from_vue["filters_dict"]
-    # print(filters_list)
-    print()
-    print(priorities_list)
-    print()
 
     response_dictionary = {}
 
