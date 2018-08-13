@@ -407,25 +407,12 @@
                         })
 
                         .then(function (response) {
-                            console.log(response)
                             app.bikes = response.data.bikes
                             app.message = response.data.message
                             console.log(bikes)
                         })
                 },
-                add: function () {
-                    this.list.push({
-                        name: 'Juan'
-                    });
-                },
-                replace: function () {
-                    this.list = [{
-                        name: 'Edgard'
-                    }]
-                }
-
             },
-
         })
     </script>
 </div>
