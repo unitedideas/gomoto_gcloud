@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from statistics import *
 import json
+from statistics import *
 import operator
 from .models import Bike
 
